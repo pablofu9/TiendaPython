@@ -1,8 +1,10 @@
+import os
 import sys
 
 from PyQt5.QtWidgets import *
-from PyQt5.QtGui import QFont
+from PyQt5.QtGui import QFont, QPixmap, QStandardItemModel, QStandardItem
 from PyQt5 import uic
+from PyQt5.uic.properties import QtGui
 
 
 class MyGui(QMainWindow):
@@ -31,7 +33,14 @@ class MyGui(QMainWindow):
         self.btnIgual.clicked.connect(self.resultado)
         self.btnModo.clicked.connect(lambda: self.cambiomodo(self.btnModo.text()))
         self.operacion = ""
+        self.table.setEditTriggers(
+            QAbstractItemView.NoEditTriggers)  # Para que la tabla se pueda hacer click pero no editar
+        self.table.itemClicked.connect(self.tablaclick)
+        self.table.itemClicked.connect(self.transfer)
+        self.table.itemClicked.connect(self.delete_row)
         self.load()
+        self.btnReset.clicked.connect(self.reset)
+        self.listaconfig()
         # Añadir zapatillas a la tabla
 
         self.btnAnadir.clicked.connect(self.save)
@@ -69,9 +78,9 @@ class MyGui(QMainWindow):
             {'marca': 'Nike', 'talla': '42', 'precio': '80'},
             {'marca': 'Adidas', 'talla': '33', 'precio': '60'},
             {'marca': 'Adidas', 'talla': '39', 'precio': '105'},
-            {'marca': 'Reebok', 'talla': '44', 'precio': '40'},
+            {'marca': 'Vans', 'talla': '44', 'precio': '40'},
             {'marca': 'New balance', 'talla': '38', 'precio': '80'},
-            {'marca': 'Joma', 'talla': '40', 'precio': '99'},
+            {'marca': 'New balance', 'talla': '40', 'precio': '99'},
             {'marca': 'Vans', 'talla': '39', 'precio': '70'},
         ]
         self.table.setRowCount(len(products))
@@ -86,7 +95,15 @@ class MyGui(QMainWindow):
             index += 1
 
     def save(self):  # Metodo para añadir registros a la tabla, una vez añadido vacia los campos
-        marca = self.txtMarca.text()
+        marca = " "
+        if self.rdNike.isChecked():
+            marca = "Nike"
+        elif self.rdAdidas.isChecked():
+            marca = "Adidas"
+        elif self.rdVans.isChecked():
+            marca = "Vans"
+        else:
+            marca = "New balance"
         talla = self.txtTalla.text()
         precio = self.txtPrecio.text()
         if marca and talla and precio is not None:
@@ -95,9 +112,61 @@ class MyGui(QMainWindow):
             self.table.setItem(rows, 0, QTableWidgetItem(marca))
             self.table.setItem(rows, 1, QTableWidgetItem(talla))
             self.table.setItem(rows, 2, QTableWidgetItem(precio))
-        self.txtMarca.setText("")
+
         self.txtTalla.setText("")
         self.txtPrecio.setText("")
+
+    def tablaclick(self, item):  # Metodo que te dice que item de la tabla has clickado
+        # Seteamos los labels con la row que seleccionemos
+        rows = item.row()
+        img = self.table.item(rows, 0).text()
+        talla = self.table.item(rows, 1).text()
+        precio = self.table.item(rows, 2).text()
+        if img == 'Nike':
+            self.imagen.setStyleSheet(
+                "background-image: url('./nike.png');background-size: contain; background-repeat: no-repeat;")
+        elif img == "Adidas":
+            self.imagen.setStyleSheet(
+                "background-image: url('./adidas.png');background-size: contain; background-repeat: no-repeat;")
+        elif img == "Vans":
+            self.imagen.setStyleSheet(
+                "background-image: url('./vans.png');background-size: contain; background-repeat: no-repeat;")
+        elif img == "New balance":
+            self.imagen.setStyleSheet(
+                "background-image: url('./newbalance.png');background-size: contain; background-repeat: no-repeat;")
+
+    def transfer(self, item):
+        total = 0
+        rows = item.row()
+
+        marca = self.table.item(rows, 0).text()
+        talla = self.table.item(rows, 1).text()
+        precio = self.table.item(rows, 2).text()
+
+        rows = self.lista.rowCount()
+        self.lista.insertRow(rows)
+        self.lista.setItem(rows, 0, QTableWidgetItem(marca))
+        self.lista.setItem(rows, 1, QTableWidgetItem(talla))
+        self.lista.setItem(rows, 2, QTableWidgetItem(precio))
+        for row in range(self.lista.rowCount()): # Recorremos la tabla de la factura y acumulamos la columa de precio
+            value = int(self.lista.item(row, 2).text())
+            total += value
+        self.precioTotal.setText(str(total) + " €")
+
+    def delete_row(self):  # Borra la fila que seleccionemos
+        selected = self.table.selectedIndexes()
+        if selected:
+            row = selected[0].row()
+            self.table.removeRow(row)
+
+    def listaconfig(self):
+        self.lista.setColumnCount(3)
+        self.lista.setHorizontalHeaderLabels(('Marca', 'talla', 'Precio'))
+
+    def reset(self):  # Volvemos a llenar la tabla principal y despues vaciamos la tabla de la factura
+        self.load()
+        self.lista.setRowCount(0)
+        self.precioTotal.setText("")
 
 
 def main():

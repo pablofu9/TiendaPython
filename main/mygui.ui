@@ -6,12 +6,23 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>766</width>
+    <width>1100</width>
     <height>570</height>
    </rect>
   </property>
+  <property name="maximumSize">
+   <size>
+    <width>1100</width>
+    <height>600</height>
+   </size>
+  </property>
   <property name="windowTitle">
    <string>MainWindow</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">.QPushButton{
+background-color:#ADA897
+}</string>
   </property>
   <widget class="QWidget" name="pantalla">
    <property name="styleSheet">
@@ -24,19 +35,19 @@
      <rect>
       <x>10</x>
       <y>380</y>
-      <width>751</width>
+      <width>1061</width>
       <height>171</height>
      </rect>
     </property>
     <property name="styleSheet">
      <string notr="true"> #calculadora{
-	background-color:#2596be;
+	background-color:#6E8693;
 }</string>
     </property>
     <widget class="QPushButton" name="btn1">
      <property name="geometry">
       <rect>
-       <x>10</x>
+       <x>80</x>
        <y>10</y>
        <width>91</width>
        <height>21</height>
@@ -49,11 +60,15 @@
     <widget class="QPushButton" name="btn2">
      <property name="geometry">
       <rect>
-       <x>110</x>
+       <x>180</x>
        <y>10</y>
        <width>91</width>
        <height>21</height>
       </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">
+</string>
      </property>
      <property name="text">
       <string>2</string>
@@ -62,7 +77,7 @@
     <widget class="QPushButton" name="btn3">
      <property name="geometry">
       <rect>
-       <x>210</x>
+       <x>280</x>
        <y>10</y>
        <width>91</width>
        <height>21</height>
@@ -75,7 +90,7 @@
     <widget class="QPushButton" name="btn6">
      <property name="geometry">
       <rect>
-       <x>210</x>
+       <x>280</x>
        <y>50</y>
        <width>91</width>
        <height>21</height>
@@ -88,7 +103,7 @@
     <widget class="QPushButton" name="btn5">
      <property name="geometry">
       <rect>
-       <x>110</x>
+       <x>180</x>
        <y>50</y>
        <width>91</width>
        <height>21</height>
@@ -101,7 +116,7 @@
     <widget class="QPushButton" name="btn4">
      <property name="geometry">
       <rect>
-       <x>10</x>
+       <x>80</x>
        <y>50</y>
        <width>91</width>
        <height>21</height>
@@ -114,7 +129,7 @@
     <widget class="QPushButton" name="btn8">
      <property name="geometry">
       <rect>
-       <x>110</x>
+       <x>180</x>
        <y>90</y>
        <width>91</width>
        <height>21</height>
@@ -127,7 +142,7 @@
     <widget class="QPushButton" name="btn7">
      <property name="geometry">
       <rect>
-       <x>10</x>
+       <x>80</x>
        <y>90</y>
        <width>91</width>
        <height>21</height>
@@ -140,7 +155,7 @@
     <widget class="QPushButton" name="btn9">
      <property name="geometry">
       <rect>
-       <x>210</x>
+       <x>280</x>
        <y>90</y>
        <width>91</width>
        <height>21</height>
@@ -153,7 +168,7 @@
     <widget class="QPushButton" name="btn0">
      <property name="geometry">
       <rect>
-       <x>10</x>
+       <x>80</x>
        <y>130</y>
        <width>291</width>
        <height>21</height>
@@ -166,7 +181,7 @@
     <widget class="QPushButton" name="btnSumar">
      <property name="geometry">
       <rect>
-       <x>310</x>
+       <x>380</x>
        <y>10</y>
        <width>71</width>
        <height>21</height>
@@ -179,7 +194,7 @@
     <widget class="QPushButton" name="btnRestar">
      <property name="geometry">
       <rect>
-       <x>310</x>
+       <x>380</x>
        <y>50</y>
        <width>71</width>
        <height>21</height>
@@ -192,7 +207,7 @@
     <widget class="QPushButton" name="btnMultiplicar">
      <property name="geometry">
       <rect>
-       <x>310</x>
+       <x>380</x>
        <y>90</y>
        <width>71</width>
        <height>21</height>
@@ -205,7 +220,7 @@
     <widget class="QPushButton" name="btnDividir">
      <property name="geometry">
       <rect>
-       <x>310</x>
+       <x>380</x>
        <y>130</y>
        <width>71</width>
        <height>21</height>
@@ -218,7 +233,7 @@
     <widget class="QPushButton" name="btnIgual">
      <property name="geometry">
       <rect>
-       <x>390</x>
+       <x>490</x>
        <y>10</y>
        <width>71</width>
        <height>141</height>
@@ -231,21 +246,27 @@
     <widget class="QTextBrowser" name="txtOperacion">
      <property name="geometry">
       <rect>
-       <x>470</x>
+       <x>580</x>
        <y>10</y>
        <width>271</width>
        <height>101</height>
       </rect>
      </property>
+     <property name="styleSheet">
+      <string notr="true">background-color:lightgrey</string>
+     </property>
     </widget>
     <widget class="QTextBrowser" name="txtResultado">
      <property name="geometry">
       <rect>
-       <x>470</x>
+       <x>580</x>
        <y>120</y>
        <width>271</width>
        <height>31</height>
       </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color:lightgrey</string>
      </property>
     </widget>
    </widget>
@@ -254,7 +275,7 @@
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>771</width>
+      <width>1261</width>
       <height>31</height>
      </rect>
     </property>
@@ -286,7 +307,7 @@
    </widget>
    <widget class="QTableWidget" name="table">
     <property name="enabled">
-     <bool>false</bool>
+     <bool>true</bool>
     </property>
     <property name="geometry">
      <rect>
@@ -312,16 +333,6 @@
     <property name="styleSheet">
      <string notr="true">background-color:#F2F2DD</string>
     </property>
-    <widget class="QLineEdit" name="txtMarca">
-     <property name="geometry">
-      <rect>
-       <x>140</x>
-       <y>10</y>
-       <width>113</width>
-       <height>20</height>
-      </rect>
-     </property>
-    </widget>
     <widget class="QLineEdit" name="txtTalla">
      <property name="geometry">
       <rect>
@@ -340,19 +351,6 @@
        <width>113</width>
        <height>20</height>
       </rect>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>10</y>
-       <width>47</width>
-       <height>13</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>MARCA</string>
      </property>
     </widget>
     <widget class="QLabel" name="label_2">
@@ -397,13 +395,186 @@
       <string>AÑADIR</string>
      </property>
     </widget>
+    <widget class="QRadioButton" name="rdNike">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>10</y>
+       <width>51</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Nike</string>
+     </property>
+     <attribute name="buttonGroup">
+      <string notr="true">buttonGroup</string>
+     </attribute>
+    </widget>
+    <widget class="QRadioButton" name="rdAdidas">
+     <property name="geometry">
+      <rect>
+       <x>60</x>
+       <y>10</y>
+       <width>61</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Adidas</string>
+     </property>
+     <attribute name="buttonGroup">
+      <string notr="true">buttonGroup</string>
+     </attribute>
+    </widget>
+    <widget class="QRadioButton" name="rdVans">
+     <property name="geometry">
+      <rect>
+       <x>120</x>
+       <y>10</y>
+       <width>51</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Vans</string>
+     </property>
+     <attribute name="buttonGroup">
+      <string notr="true">buttonGroup</string>
+     </attribute>
+    </widget>
+    <widget class="QRadioButton" name="rdNewbalance">
+     <property name="geometry">
+      <rect>
+       <x>170</x>
+       <y>10</y>
+       <width>82</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>New balance</string>
+     </property>
+     <attribute name="buttonGroup">
+      <string notr="true">buttonGroup</string>
+     </attribute>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="widget_2" native="true">
+    <property name="geometry">
+     <rect>
+      <x>340</x>
+      <y>180</y>
+      <width>261</width>
+      <height>181</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color:#E2E7B4
+</string>
+    </property>
+    <widget class="QWidget" name="imagen" native="true">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>261</width>
+       <height>181</height>
+      </rect>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QPushButton" name="btnGenerar">
+    <property name="geometry">
+     <rect>
+      <x>940</x>
+      <y>40</y>
+      <width>131</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color:#FF855D</string>
+    </property>
+    <property name="text">
+     <string>Generar</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btnReset">
+    <property name="geometry">
+     <rect>
+      <x>940</x>
+      <y>70</y>
+      <width>131</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color:#78FF21
+</string>
+    </property>
+    <property name="text">
+     <string>Reset</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_3">
+    <property name="geometry">
+     <rect>
+      <x>940</x>
+      <y>342</y>
+      <width>131</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color:#EFF133
+</string>
+    </property>
+    <property name="text">
+     <string>PAGAR</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="precioTotal">
+    <property name="geometry">
+     <rect>
+      <x>610</x>
+      <y>340</y>
+      <width>311</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color:#F2F2DD</string>
+    </property>
+   </widget>
+   <widget class="QTableWidget" name="lista">
+    <property name="geometry">
+     <rect>
+      <x>610</x>
+      <y>40</y>
+      <width>311</width>
+      <height>291</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color:#F2F2DD</string>
+    </property>
    </widget>
    <zorder>calculadora</zorder>
    <zorder>frame</zorder>
    <zorder>widget</zorder>
    <zorder>table</zorder>
+   <zorder>widget_2</zorder>
+   <zorder>btnGenerar</zorder>
+   <zorder>btnReset</zorder>
+   <zorder>pushButton_3</zorder>
+   <zorder>precioTotal</zorder>
+   <zorder>lista</zorder>
   </widget>
  </widget>
  <resources/>
  <connections/>
+ <buttongroups>
+  <buttongroup name="buttonGroup"/>
+ </buttongroups>
 </ui>
