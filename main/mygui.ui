@@ -67,8 +67,7 @@ background-color:#ADA897
       </rect>
      </property>
      <property name="styleSheet">
-      <string notr="true">
-</string>
+      <string notr="true"/>
      </property>
      <property name="text">
       <string>2</string>
@@ -517,7 +516,7 @@ background-color:#ADA897
      <string>Reset</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_3">
+   <widget class="QPushButton" name="btnPagar">
     <property name="geometry">
      <rect>
       <x>940</x>
@@ -567,7 +566,7 @@ background-color:#ADA897
    <zorder>widget_2</zorder>
    <zorder>btnGenerar</zorder>
    <zorder>btnReset</zorder>
-   <zorder>pushButton_3</zorder>
+   <zorder>btnPagar</zorder>
    <zorder>precioTotal</zorder>
    <zorder>lista</zorder>
   </widget>

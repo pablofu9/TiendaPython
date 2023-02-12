@@ -1,5 +1,6 @@
 import os
 import sys
+import re
 
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import QFont, QPixmap, QStandardItemModel, QStandardItem
@@ -41,8 +42,9 @@ class MyGui(QMainWindow):
         self.load()
         self.btnReset.clicked.connect(self.reset)
         self.listaconfig()
+        self.btnPagar.clicked.connect(self.irpago)
         # Añadir zapatillas a la tabla
-
+        self.btnGenerar.clicked.connect(self.resetear)
         self.btnAnadir.clicked.connect(self.save)
         # Boton para cambiar modo de oscuro a claro y de claro a oscuro
 
@@ -54,12 +56,30 @@ class MyGui(QMainWindow):
     def resultado(self):  # Este metodo recoge la informacion de lo que hemos pulsado en los botones y cuando
         # pulsamos en = lo que hace es, hacernos la operacion y nos pone el restulado abajo y nos reseta la
         # variable operacion
+        if self.txtOperacion.toPlainText() == "":
+            msg_box = QMessageBox(self)  # Si no hay productos seleccionados salta error
+            msg_box.setWindowTitle("Error")
+            msg_box.setText("No hay nada que calcular")
+            msg_box.setIcon(QMessageBox.Critical)
+            msg_box.exec_()
+        else:
+            first = self.txtOperacion.toPlainText()[0]
+            if '0' <= first <= '9':
+                result = eval(self.txtOperacion.toPlainText())
+                self.txtResultado.setText(str(result))
+                self.txtOperacion.setText("")
+                self.operacion = ""
+            else:
+                error2 = QMessageBox(self)
+                error2.setWindowTitle("Error")
+                error2.setText("Error en comienzo de cadena")
+                error2.setIcon(QMessageBox.Critical)
+                error2.exec_()
+                self.txtOperacion.setText("")
+                self.txtResultado.setText("")
+                self.operacion = ""
 
-        # el eval lo que hace es coger una expresion y la hace matematicamente
-        result = eval(self.txtOperacion.toPlainText())
-        self.txtResultado.setText(str(result) + " €")
-        self.txtOperacion.setText("")
-        self.operacion = ""
+            # el eval lo que hace es coger una expresion y la hace matematicamente
 
     def cambiomodo(self, text):
         # Falta el cambio de los botones y de la calculadora las pantallas
@@ -107,11 +127,18 @@ class MyGui(QMainWindow):
         talla = self.txtTalla.text()
         precio = self.txtPrecio.text()
         if marca and talla and precio is not None:
-            rows = self.table.rowCount()
-            self.table.insertRow(rows)
-            self.table.setItem(rows, 0, QTableWidgetItem(marca))
-            self.table.setItem(rows, 1, QTableWidgetItem(talla))
-            self.table.setItem(rows, 2, QTableWidgetItem(precio))
+            if re.match(r"^\d+$", talla) and re.match(r"^\d+$", precio):  # Comprobando que talla y precio son numeros
+                rows = self.table.rowCount()
+                self.table.insertRow(rows)
+                self.table.setItem(rows, 0, QTableWidgetItem(marca))
+                self.table.setItem(rows, 1, QTableWidgetItem(talla))
+                self.table.setItem(rows, 2, QTableWidgetItem(precio))
+            else:
+                msg_box = QMessageBox(self)  # Si no hay productos seleccionados salta error
+                msg_box.setWindowTitle("Error")
+                msg_box.setText("Talla y precio deben ser numeros")
+                msg_box.setIcon(QMessageBox.Critical)
+                msg_box.exec_()
 
         self.txtTalla.setText("")
         self.txtPrecio.setText("")
@@ -148,7 +175,7 @@ class MyGui(QMainWindow):
         self.lista.setItem(rows, 0, QTableWidgetItem(marca))
         self.lista.setItem(rows, 1, QTableWidgetItem(talla))
         self.lista.setItem(rows, 2, QTableWidgetItem(precio))
-        for row in range(self.lista.rowCount()): # Recorremos la tabla de la factura y acumulamos la columa de precio
+        for row in range(self.lista.rowCount()):  # Recorremos la tabla de la factura y acumulamos la columa de precio
             value = int(self.lista.item(row, 2).text())
             total += value
         self.precioTotal.setText(str(total) + " €")
@@ -167,6 +194,59 @@ class MyGui(QMainWindow):
         self.load()
         self.lista.setRowCount(0)
         self.precioTotal.setText("")
+
+    def irpago(self, item):
+        if self.btnPagar.text() == "PAGAR":
+            if self.precioTotal.text() == "":
+                msg_box = QMessageBox(self)  # Si no hay productos seleccionados salta error
+                msg_box.setWindowTitle("No products")
+                msg_box.setText("Debes seleccionar algun producto")
+                msg_box.setIcon(QMessageBox.Critical)
+                msg_box.exec_()
+            else:
+                msg_box = QMessageBox(self)  # Si no hay productos seleccionados salta error
+                msg_box.setWindowTitle("Su factura")
+                msg_box.setText("Aqui tiene sus productos")
+                msg_box.setIcon(QMessageBox.Information)
+                info = ""
+                for i in range(self.lista.rowCount()):
+                    for j in range(self.lista.columnCount()):
+                        item = self.lista.item(i, j)
+                        if item is not None:
+                            info += item.text() + "\n"
+                msg_box.setInformativeText(info)
+                msg_box.setDetailedText("Total " + self.precioTotal.text())
+
+                msg_box.exec_()
+                sys.exit(0)
+        else:
+            if self.txtResultado.toPlainText() == "":
+                msg_box = QMessageBox(self)  # Si no hay productos seleccionados salta error
+                msg_box.setWindowTitle("Nada que hacer...")
+                msg_box.setText("Realiza una operación")
+                msg_box.setIcon(QMessageBox.Critical)
+                msg_box.exec_()
+            else:
+                self.precioTotal.setText(self.txtResultado.toPlainText())
+                msg_box = QMessageBox(self)  # Si no hay productos seleccionados salta error
+                msg_box.setWindowTitle("Su factura")
+                msg_box.setText("TOTAL A PAGAR --> " + self.precioTotal.text() + " €")
+                msg_box.setIcon(QMessageBox.Information)
+                msg_box.exec_()
+                sys.exit(0)
+
+    def resetear(self):
+        msg_box = QMessageBox(self)  # Si no hay productos seleccionados salta error
+        msg_box.setWindowTitle("Factura manual")
+        msg_box.setText("¿Desde generar la factura de forma manual?")
+        msg_box.setIcon(QMessageBox.Information)
+        msg_box.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
+        respuesta = msg_box.exec_()
+        if respuesta == QMessageBox.Ok:
+            self.btnPagar.setText("€€")
+            self.precioTotal.setText("")
+        elif respuesta == QMessageBox.Cancel:
+            self.btnPagar.setText("PAGAR")
 
 
 def main():
