@@ -26,26 +26,28 @@ class MyGui(QMainWindow):
         self.btn8.clicked.connect(lambda: self.veroperacion(self.btn8.text()))
         self.btn9.clicked.connect(lambda: self.veroperacion(self.btn9.text()))
         self.btn0.clicked.connect(lambda: self.veroperacion(self.btn0.text()))
-        self.btn0.clicked.connect(lambda: self.veroperacion(self.btn0.text()))
+        
         self.btnSumar.clicked.connect(lambda: self.veroperacion(self.btnSumar.text()))
         self.btnMultiplicar.clicked.connect(lambda: self.veroperacion(self.btnMultiplicar.text()))
         self.btnRestar.clicked.connect(lambda: self.veroperacion(self.btnRestar.text()))
         self.btnDividir.clicked.connect(lambda: self.veroperacion(self.btnDividir.text()))
         self.btnIgual.clicked.connect(self.resultado)
-        self.btnModo.clicked.connect(lambda: self.cambiomodo(self.btnModo.text()))
+
+        # Variable que vamos a usar para las expresiones matematicas de la calculadora
         self.operacion = ""
         self.table.setEditTriggers(
             QAbstractItemView.NoEditTriggers)  # Para que la tabla se pueda hacer click pero no editar
         self.table.itemClicked.connect(self.tablaclick)
         self.table.itemClicked.connect(self.transfer)
         self.table.itemClicked.connect(self.delete_row)
-        self.load()
-        self.btnReset.clicked.connect(self.reset)
+        # Metodos enlazados a las tablas
+        self.load()  # Metodo para cargar el array de productos de venta
+        self.btnReset.clicked.connect(self.reset)  # Metodo del boton reset para setear la factura
         self.listaconfig()
-        self.btnPagar.clicked.connect(self.irpago)
+        self.btnPagar.clicked.connect(self.irpago)  # Metodo para ir al pago de la factura
         # Añadir zapatillas a la tabla
-        self.btnGenerar.clicked.connect(self.resetear)
-        self.btnAnadir.clicked.connect(self.save)
+        self.btnGenerar.clicked.connect(self.resetear)  # Boton para generar la factura de forma manual
+        self.btnAnadir.clicked.connect(self.save)  # Boton para añadir nuevos objetos a la tabla
         # Boton para cambiar modo de oscuro a claro y de claro a oscuro
 
     def veroperacion(self, text):
@@ -62,7 +64,7 @@ class MyGui(QMainWindow):
             msg_box.setText("No hay nada que calcular")
             msg_box.setIcon(QMessageBox.Critical)
             msg_box.exec_()
-        else:
+        else:  # Aqui lo que hacemos es comprobar que el primer caracter que presionemos sea un numero, para evitar errores
             first = self.txtOperacion.toPlainText()[0]
             if '0' <= first <= '9':
                 result = eval(self.txtOperacion.toPlainText())
@@ -81,17 +83,6 @@ class MyGui(QMainWindow):
 
             # el eval lo que hace es coger una expresion y la hace matematicamente
 
-    def cambiomodo(self, text):
-        # Falta el cambio de los botones y de la calculadora las pantallas
-        if text == "Modo oscuro":
-            self.btnModo.setText("Modo claro")
-            self.calculadora.setStyleSheet("background-color: #2596be;")
-            self.pantalla.setStyleSheet("background-color: #13173E;")
-        else:
-            self.calculadora.setStyleSheet("background-color: white;")
-            self.pantalla.setStyleSheet("background-color: #F5F4B9;")
-            self.btnModo.setText("Modo oscuro")
-
     def load(self):  # LLenamos la tabla
         products = [
             {'marca': 'Nike', 'talla': '39', 'precio': '100'},
@@ -107,7 +98,7 @@ class MyGui(QMainWindow):
         self.table.setColumnCount(3)
         self.table.setHorizontalHeaderLabels(('Marca', 'talla', 'Precio'))
 
-        index = 0
+        index = 0  # Vamos a recorrer el array de productos para ir llenando la tabla
         for product in products:
             self.table.setItem(index, 0, QTableWidgetItem(product['marca']))
             self.table.setItem(index, 1, QTableWidgetItem(product['talla']))
@@ -115,7 +106,7 @@ class MyGui(QMainWindow):
             index += 1
 
     def save(self):  # Metodo para añadir registros a la tabla, una vez añadido vacia los campos
-        marca = " "
+        marca = " "  # Tenemos esta variable que se recoge mediante los radio buttons, que estran en el mismo radiogroup
         if self.rdNike.isChecked():
             marca = "Nike"
         elif self.rdAdidas.isChecked():
@@ -139,14 +130,14 @@ class MyGui(QMainWindow):
                 msg_box.setText("Talla y precio deben ser numeros")
                 msg_box.setIcon(QMessageBox.Critical)
                 msg_box.exec_()
-
+        # Una vez esta hecho, vaciamos los campos de texto
         self.txtTalla.setText("")
         self.txtPrecio.setText("")
 
     def tablaclick(self, item):  # Metodo que te dice que item de la tabla has clickado
         # Seteamos los labels con la row que seleccionemos
         rows = item.row()
-        img = self.table.item(rows, 0).text()
+        img = self.table.item(rows, 0).text()  # al clickar en la tabla ponemos las imagenes que corresponden a la marca
         talla = self.table.item(rows, 1).text()
         precio = self.table.item(rows, 2).text()
         if img == 'Nike':
@@ -165,7 +156,7 @@ class MyGui(QMainWindow):
     def transfer(self, item):
         total = 0
         rows = item.row()
-
+        # Transferimos la informacion de una tabla a la otra, cuando pinchamos en la primera de ellas
         marca = self.table.item(rows, 0).text()
         talla = self.table.item(rows, 1).text()
         precio = self.table.item(rows, 2).text()
@@ -177,7 +168,7 @@ class MyGui(QMainWindow):
         self.lista.setItem(rows, 2, QTableWidgetItem(precio))
         for row in range(self.lista.rowCount()):  # Recorremos la tabla de la factura y acumulamos la columa de precio
             value = int(self.lista.item(row, 2).text())
-            total += value
+            total += value  # Incrementamos el total de la factura con la columna precio de la tabla que se llama lista
         self.precioTotal.setText(str(total) + " €")
 
     def delete_row(self):  # Borra la fila que seleccionemos
@@ -186,16 +177,18 @@ class MyGui(QMainWindow):
             row = selected[0].row()
             self.table.removeRow(row)
 
-    def listaconfig(self):
+    def listaconfig(self):  # Para setear la configuración de la tabla de la factura
         self.lista.setColumnCount(3)
         self.lista.setHorizontalHeaderLabels(('Marca', 'talla', 'Precio'))
 
     def reset(self):  # Volvemos a llenar la tabla principal y despues vaciamos la tabla de la factura
+        # Este metodo esta enlazado al boton de reset
         self.load()
         self.lista.setRowCount(0)
         self.precioTotal.setText("")
 
-    def irpago(self, item):
+    def irpago(self, item):  # Metodo enlazado al boton de ir al pago, si hemos seleccionado generar la factura manual
+        # Nos lo hara de una manera distinta
         if self.btnPagar.text() == "PAGAR":
             if self.precioTotal.text() == "":
                 msg_box = QMessageBox(self)  # Si no hay productos seleccionados salta error
@@ -235,7 +228,7 @@ class MyGui(QMainWindow):
                 msg_box.exec_()
                 sys.exit(0)
 
-    def resetear(self):
+    def resetear(self):  # Metodo para que seleccionemos si queremos la factura manual o autogenerada
         msg_box = QMessageBox(self)  # Si no hay productos seleccionados salta error
         msg_box.setWindowTitle("Factura manual")
         msg_box.setText("¿Desde generar la factura de forma manual?")
@@ -249,9 +242,10 @@ class MyGui(QMainWindow):
             self.btnPagar.setText("PAGAR")
 
 
-def main():
+def main():  # Iniciamos la app
     app = QApplication([])
     window = MyGui()
+    window.setFixedSize(1100, 600)
     app.exec_()
 
 

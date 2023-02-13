@@ -269,41 +269,6 @@ background-color:#ADA897
      </property>
     </widget>
    </widget>
-   <widget class="QFrame" name="frame">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>0</y>
-      <width>1261</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">background-color:black</string>
-    </property>
-    <property name="frameShape">
-     <enum>QFrame::StyledPanel</enum>
-    </property>
-    <property name="frameShadow">
-     <enum>QFrame::Raised</enum>
-    </property>
-    <widget class="QPushButton" name="btnModo">
-     <property name="geometry">
-      <rect>
-       <x>0</x>
-       <y>0</y>
-       <width>91</width>
-       <height>31</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">background-color:white</string>
-     </property>
-     <property name="text">
-      <string>Modo claro</string>
-     </property>
-    </widget>
-   </widget>
    <widget class="QTableWidget" name="table">
     <property name="enabled">
      <bool>true</bool>
@@ -559,8 +524,24 @@ background-color:#ADA897
      <string notr="true">background-color:#F2F2DD</string>
     </property>
    </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>430</x>
+      <y>10</y>
+      <width>171</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color:white;
+font-size:20px</string>
+    </property>
+    <property name="text">
+     <string>Zapateria Fuertes</string>
+    </property>
+   </widget>
    <zorder>calculadora</zorder>
-   <zorder>frame</zorder>
    <zorder>widget</zorder>
    <zorder>table</zorder>
    <zorder>widget_2</zorder>
@@ -569,6 +550,7 @@ background-color:#ADA897
    <zorder>btnPagar</zorder>
    <zorder>precioTotal</zorder>
    <zorder>lista</zorder>
+   <zorder>label</zorder>
   </widget>
  </widget>
  <resources/>
